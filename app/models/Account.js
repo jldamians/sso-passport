@@ -1,6 +1,7 @@
 'use strict';
 
-var crypto = require('crypto');
+var bcrypt = require('bcrypt');
+var Promises = require('bluebird');
 
 /* eslint new-cap: 0 */
 module.exports = function(sequelize, DataTypes, meta) {
@@ -59,20 +60,35 @@ module.exports = function(sequelize, DataTypes, meta) {
       tableName: meta.tableName,
       schema: meta.schema,
       instanceMethods: {
-        hashPassword: function(argPassword) {
-          var key = crypto.pbkdf2Sync(argPassword, this.salt, 10000, 64);
-
-          return key.toString('base64');
-        },
         authenticate: function(argPassword) {
-          return this.password === this.hashPassword(argPassword);
+          var myPlaintextPassword = argPassword;
+          var hash = this.password;
+
+          return new Promises(function(resolve, reject) {
+            bcrypt.compare(myPlaintextPassword, hash, function(err, res) {
+              if (err) { return reject(new Error('Password incorrecto')); }
+
+              return resolve(res);
+            });
+          });
         }
       },
       hooks: {
         beforeCreate: function(model, options) {
-          model.salt = crypto.randomBytes(16).toString('base64');
-          model.password = model.hashPassword(model.password);
-          model.created = model.created ? model.created : new Date();
+          var saltRounds = 10;
+          var myPlaintextPassword = model.password;
+
+          return new Promises(function(resolve, reject) {
+            bcrypt.hash(myPlaintextPassword, saltRounds, function(err, hash) {
+              if (err) { return reject(new Error('Error al generar password')); }
+
+              return resolve(hash);
+            });
+          }).then(function(hash) {
+            model.salt = myPlaintextPassword;
+            model.password = hash;
+            model.created = model.created ? model.created : new Date();
+          });
         }
       }
     }

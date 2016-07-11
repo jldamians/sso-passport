@@ -22,13 +22,15 @@ module.exports = function() {
         });
       }
 
-      if (!account.authenticate(password)) {
-        return done(null, false, {
-          message: 'Contraseña Inválida'
-        });
-      }
+      account.authenticate(password).then(function(res) {
+        if (!res) {
+          return done(null, false, {
+            message: 'Contraseña Inválida'
+          });
+        }
 
-      return done(null, account);
+        return done(null, account);
+      });
     }).catch(function(error) {
       return done(error);
     });
