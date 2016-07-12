@@ -6,7 +6,7 @@ var express = require('./config/express.js'),
 var app = express(),
     passport = passport();
 
-app.listen(3000);
+app.listen(80);
 
 //module.exports = app;
 
