@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Default GUI</title>
+  </head>
+  <body>
+    <% if (fullName) { %>
+      <h2>Bienvenido <%= fullName %></h2>
+
+      <br>
+
+      <a href="http://app1.sso.dev/">App 1</a>
+      <a href="http://app2.sso.dev/">app 2</a>
+      <a href="http://api.sso.dev/signout">Cerrar Sesión</a>
+    <% } else { %>
+      <h2>Authentication SSO</h2>
+
+      <br>
+
+      <a href="/signin">Indentificarse</a>
+    <% } %>
+  </body>
+</html>

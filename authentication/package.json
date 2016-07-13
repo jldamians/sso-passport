@@ -20,8 +20,10 @@
     "passport": "^0.3.2",
     "passport-local": "^1.0.0",
     "password-generator": "^2.0.2",
+    "request": "^2.73.0",
     "sequelize": "^3.23.4",
-    "sequelize-auto-import": "^1.0.1"
+    "sequelize-auto-import": "^1.0.1",
+    "virtual-host": "0.0.1"
   },
   "main": "server.js"
 }

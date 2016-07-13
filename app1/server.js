@@ -8,4 +8,6 @@ var app = express(),
 
 app.listen(80);
 
-console.log('api.sso.dev init... 80');
+//module.exports = app;
+
+console.log('Servidor ejecutándose...');

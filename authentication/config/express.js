@@ -21,18 +21,12 @@ var appFactory = function(echo) {
     extended: true
   }));
   appInstance.use(bodyParser.json());
-  appInstance.use(methodOverride());
-  appInstance.use(session({
-    saveUninitialized: true,
-    resave: true,
-    secret: config.sessionSecret
-  }));
+  appInstance.set('views', './app/views');
+  appInstance.set('view engine', 'ejs');
 
-  appInstance.use(flash());
-  appInstance.use(passport.initialize());
-  appInstance.use(passport.session());
+  require('../app/routes/index.server.routes.js')(appInstance);
 
-  require('../app/routes/account.server.routes.js')(appInstance);
+  appInstance.use(express.static('./public'));
 
   return appInstance;
 }
@@ -42,7 +36,7 @@ module.exports = function() {
 
   app.use(evh.vhost(app.enabled('trust proxy')));
 
-  evh.register('api.sso.dev', appFactory());
+  evh.register('authentication.sso.dev', appFactory());
 
   return app;
 }
