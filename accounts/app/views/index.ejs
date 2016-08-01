@@ -4,7 +4,8 @@
     <title><%= title %></title>
   </head>
   <body>
-    <form action="http://api.sso.dev/signin" method="post">
+    <form action="http://accounts.facturactiva.com/authenticate" method="post">
+      <input type="hidden" name="callback" value="<%= callback %>">
       <div>
         <label>Usuario:</label>
         <input type="text" name="username">

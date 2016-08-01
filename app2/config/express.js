@@ -40,7 +40,7 @@ module.exports = function() {
 
   app.use(evh.vhost(app.enabled('trust proxy')));
 
-  evh.register('app1.facturactiva.com', appFactory());
+  evh.register('app2.facturactiva.com', appFactory());
 
   return app;
 }

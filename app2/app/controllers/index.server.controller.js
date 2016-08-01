@@ -6,7 +6,7 @@ exports.render = function(req, res) {
   }
 
   res.render('index', {
-    title: 'app1',
-    description: 'Welcome to App1'
+    title: 'app2',
+    description: 'Welcome to App2'
   });
 }
